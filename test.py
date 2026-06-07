@@ -1,27 +1,64 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import sys
 import subprocess
 
-# 直接把你的 Groq API Key 貼在這裡（gsk_ 開頭）
-GROQ_API_KEY = "在這裡貼上你的key"
+# 把你的 OpenAI API Key 貼在這裡（sk- 開頭）
+OPENAI_API_KEY = ""
+
+# 要使用的模型，可換成 gpt-4o、gpt-4o-mini、gpt-4-turbo 等
+MODEL = "gpt-4o-mini"
 
 def get_api_key():
-    if not GROQ_API_KEY or GROQ_API_KEY == "在這裡貼上你的key":
-        print("❌ 還沒填 Groq API Key。")
-        print("   請打開 ask.py，把 GROQ_API_KEY 換成你 gsk_ 開頭的 key。")
+    if not OPENAI_API_KEY or OPENAI_API_KEY == "在這裡貼上你的key":
+        print("❌ 還沒填 OpenAI API Key。")
+        print("   請打開 ask_gpt.py，把 OPENAI_API_KEY 換成你 sk- 開頭的 key。")
+        print("   取得 Key：https://platform.openai.com/api-keys")
         sys.exit(1)
-    return GROQ_API_KEY
+    return OPENAI_API_KEY
 
 def install_if_missing():
     try:
-        import groq
+        import openai
     except ImportError:
-        print("📦 正在安裝 groq 套件...")
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "groq", "--break-system-packages"])
+        print("📦 正在安裝 openai 套件...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "openai", "--break-system-packages"])
         print("✅ 安裝完成！\n")
 
 def ask(client, messages):
     response = client.chat.completions.create(
-        model="openai/gpt-oss-120b",
+        model=MODEL,
         messages=messages,
         temperature=0.7,
     )
@@ -29,9 +66,9 @@ def ask(client, messages):
 
 def main():
     install_if_missing()
-    from groq import Groq
+    from openai import OpenAI
 
-    client = Groq(api_key=get_api_key())
+    client = OpenAI(api_key=get_api_key())
 
     system_prompt = {
         "role": "system",
@@ -44,8 +81,8 @@ def main():
 
     messages = [system_prompt]
 
-    print(" Python answer")
-    print("input Python question，enter q to quit\n")
+    print(f"🤖 ChatGPT ({MODEL}) Python 問答")
+    print("輸入 Python 問題，輸入 q 離開\n")
 
     while True:
         try:
@@ -74,3 +111,11 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    #sk
+#-proj-D0-7QR9xTQO0uIm
+# T7wnB0wjGj3AL1kdEtFyf2klEedrKdkcvc_k92S-
+# sPy9yyW33jiTVL4RQ5QT3BlbkFJOBxKhJuhJF8-
+# _7DK68CEKXNBVwgApBDGpNTzh6AW--
+# bvJzgjVL3VEVSXHj
+# davGeQtysQ73gX8A
